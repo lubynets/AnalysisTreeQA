@@ -78,6 +78,6 @@ void Qa3D(QA::Task& task) {
       task.AddH1({"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.3, 0.3}}, y_pT_cut);
       task.AddH1({"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.3, 0.3}}, y_pT_cut);
       
-//       delete y_pT_cut;
+      delete y_pT_cut;
     }
 }
