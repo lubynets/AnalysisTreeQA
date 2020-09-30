@@ -59,11 +59,15 @@ void Qa3D(QA::Task& task) {
   const float pT_low = 0.;
   const float pT_up = 2.5;
   const float pT_bin_width = (pT_up-pT_low)/pT_nbins;
+  
+  std::vector<Cuts*> y_pT_cut;
+  y_pT_cut.resize(y_nbins*pT_nbins);
     
   for(int i_y_bin=1; i_y_bin<=y_nbins; i_y_bin++)
     for(int i_pT_bin=1; i_pT_bin<=pT_nbins; i_pT_bin++)
     {
       std::string binname = "y" + std::to_string(i_y_bin) + "_pT" + std::to_string(i_pT_bin);
+      int binnumber = (i_y_bin-1)*pT_nbins + i_pT_bin-1;
       
       Variable diff_px("diff_px_" + binname, {{lambda_candidates_particles, "px"}, {lambda_simulated_particles, "px"}}, [](std::vector<double> par){return par[0]-par[1];});
       Variable diff_py("diff_py_" + binname, {{lambda_candidates_particles, "py"}, {lambda_simulated_particles, "py"}}, [](std::vector<double> par){return par[0]-par[1];});
@@ -72,12 +76,11 @@ void Qa3D(QA::Task& task) {
       SimpleCut y_cut({lambda_candidates_particles, "rapidity"}, y_low + (i_y_bin-1)*y_bin_width, y_low + i_y_bin*y_bin_width);
       SimpleCut pT_cut({lambda_candidates_particles, "pT"}, pT_low + (i_pT_bin-1)*pT_bin_width, pT_low + i_pT_bin*pT_bin_width);
       
-      Cuts* y_pT_cut = new Cuts("3Dcut", {y_cut, pT_cut});      
+      y_pT_cut.at(binnumber) = new Cuts("3Dcut", {y_cut, pT_cut});
       
-      task.AddH1({"p_{x}^{reco}-p_{x}^{sim}, GeV/c", diff_px, {nbins, -0.3, 0.3}}, y_pT_cut);
-      task.AddH1({"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.3, 0.3}}, y_pT_cut);
-      task.AddH1({"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.3, 0.3}}, y_pT_cut);
+      task.AddH1({"p_{x}^{reco}-p_{x}^{sim}, GeV/c", diff_px, {nbins, -0.3, 0.3}}, y_pT_cut.at(binnumber));
+      task.AddH1({"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.3, 0.3}}, y_pT_cut.at(binnumber));
+      task.AddH1({"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.3, 0.3}}, y_pT_cut.at(binnumber));
       
-      delete y_pT_cut;
     }
 }
