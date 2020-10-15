@@ -6,7 +6,7 @@
 #include "src/Task.hpp"
 #include "src/Utils.hpp"
 
-const int nbins = 2000;
+const int nbins = 1000;
 const float HugeValue = 1e9;
 
 using namespace AnalysisTree;
@@ -62,25 +62,52 @@ void Qa3D(QA::Task& task) {
   
   std::vector<Cuts*> y_pT_cut;
   y_pT_cut.resize(y_nbins*pT_nbins);
-    
+  
+  Variable diff_px("diff_px", {{lambda_candidates_particles, "px"}, {lambda_simulated_particles, "px"}}, [](std::vector<double> par){return par[0]-par[1];});
+  Variable diff_py("diff_py", {{lambda_candidates_particles, "py"}, {lambda_simulated_particles, "py"}}, [](std::vector<double> par){return par[0]-par[1];});
+  Variable diff_pz("diff_pz", {{lambda_candidates_particles, "pz"}, {lambda_simulated_particles, "pz"}}, [](std::vector<double> par){return par[0]-par[1];});  
+        
+  Variable pull_px("pull_px", {{lambda_candidates_particles, "px"}, {lambda_simulated_particles, "px"}, {lambda_candidates_particles, "pxerr"}}, [](std::vector<double> par){return (par[0]-par[1])/par[2];});
+  Variable pull_py("pull_py", {{lambda_candidates_particles, "py"}, {lambda_simulated_particles, "py"}, {lambda_candidates_particles, "pyerr"}}, [](std::vector<double> par){return (par[0]-par[1])/par[2];});
+  Variable pull_pz("pull_pz", {{lambda_candidates_particles, "pz"}, {lambda_simulated_particles, "pz"}, {lambda_candidates_particles, "pzerr"}}, [](std::vector<double> par){return (par[0]-par[1])/par[2];});  
+        
   for(int i_y_bin=1; i_y_bin<=y_nbins; i_y_bin++)
     for(int i_pT_bin=1; i_pT_bin<=pT_nbins; i_pT_bin++)
     {
-      std::string binname = "y" + std::to_string(i_y_bin) + "_pT" + std::to_string(i_pT_bin);
+      std::string binname;
+      if(i_y_bin<10 && i_pT_bin<10)
+        binname = "y0" + std::to_string(i_y_bin) + "_pT0" + std::to_string(i_pT_bin);
+      else if(i_y_bin<10)
+        binname = "y0" + std::to_string(i_y_bin) + "_pT" + std::to_string(i_pT_bin);
+      else if(i_pT_bin<10)
+        binname = "y" + std::to_string(i_y_bin) + "_pT0" + std::to_string(i_pT_bin);
+      else      
+        binname = "y" + std::to_string(i_y_bin) + "_pT" + std::to_string(i_pT_bin);
+      
       int binnumber = (i_y_bin-1)*pT_nbins + i_pT_bin-1;
-      
-      Variable diff_px("diff_px_" + binname, {{lambda_candidates_particles, "px"}, {lambda_simulated_particles, "px"}}, [](std::vector<double> par){return par[0]-par[1];});
-      Variable diff_py("diff_py_" + binname, {{lambda_candidates_particles, "py"}, {lambda_simulated_particles, "py"}}, [](std::vector<double> par){return par[0]-par[1];});
-      Variable diff_pz("diff_pz_" + binname, {{lambda_candidates_particles, "pz"}, {lambda_simulated_particles, "pz"}}, [](std::vector<double> par){return par[0]-par[1];});      
-      
+            
       SimpleCut y_cut({lambda_candidates_particles, "rapidity"}, y_low + (i_y_bin-1)*y_bin_width, y_low + i_y_bin*y_bin_width);
       SimpleCut pT_cut({lambda_candidates_particles, "pT"}, pT_low + (i_pT_bin-1)*pT_bin_width, pT_low + i_pT_bin*pT_bin_width);
       
-      y_pT_cut.at(binnumber) = new Cuts("3Dcut", {y_cut, pT_cut});
+      y_pT_cut.at(binnumber) = new Cuts(binname, {y_cut, pT_cut});
+      
+      task.AddH1({"m_{#Lambda}, GeV/c^{2}", {lambda_candidates_particles, "mass"}, {nbins, 1.1, 1.132}}, y_pT_cut.at(binnumber));
       
       task.AddH1({"p_{x}^{reco}-p_{x}^{sim}, GeV/c", diff_px, {nbins, -0.3, 0.3}}, y_pT_cut.at(binnumber));
       task.AddH1({"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.3, 0.3}}, y_pT_cut.at(binnumber));
-      task.AddH1({"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.3, 0.3}}, y_pT_cut.at(binnumber));
+      task.AddH1({"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.5, 0.5}}, y_pT_cut.at(binnumber));
+      
+      task.AddH2({"p_{x}^{reco}-p_{x}^{sim}, GeV/c", diff_px, {nbins, -0.3, 0.3}}, {"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.3, 0.3}}, y_pT_cut.at(binnumber));
+//       task.AddH2({"p_{x}^{reco}-p_{x}^{sim}, GeV/c", diff_px, {nbins, -0.3, 0.3}}, {"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.5, 0.5}}, y_pT_cut.at(binnumber));
+//       task.AddH2({"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.3, 0.3}}, {"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.5, 0.5}}, y_pT_cut.at(binnumber));
+      
+      task.AddH1({"(p_{x}^{reco}-p_{x}^{sim})/#sigma_{p_{x}}", pull_px, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
+      task.AddH1({"(p_{y}^{reco}-p_{y}^{sim})/#sigma_{p_{y}}", pull_py, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
+      task.AddH1({"(p_{z}^{reco}-p_{z}^{sim})/#sigma_{p_{z}}", pull_pz, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
+//       
+//       task.AddH2({"(p_{x}^{reco}-p_{x}^{sim})/#sigma_{p_{x}}", pull_px, {nbins, -10, 10}}, {"(p_{y}^{reco}-p_{y}^{sim})/#sigma_{p_{y}}", pull_py, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
+//       task.AddH2({"(p_{x}^{reco}-p_{x}^{sim})/#sigma_{p_{x}}", pull_px, {nbins, -10, 10}}, {"(p_{z}^{reco}-p_{z}^{sim})/#sigma_{p_{z}}", pull_pz, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
+//       task.AddH2({"(p_{y}^{reco}-p_{y}^{sim})/#sigma_{p_{y}}", pull_py, {nbins, -10, 10}}, {"(p_{z}^{reco}-p_{z}^{sim})/#sigma_{p_{z}}", pull_pz, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
       
     }
 }
