@@ -6,7 +6,7 @@
 #include "src/Task.hpp"
 #include "src/Utils.hpp"
 
-const int nbins = 1000;
+const int nbins = 500;
 const float HugeValue = 1e9;
 
 using namespace AnalysisTree;
@@ -17,7 +17,7 @@ const std::string lambda_candidates_particles = "LambdaCandidates";
 const std::string lambda_simulated_particles = "LambdaSimulated";
 const float y_beam = 1.62179;
 
-SimpleCut signal_cut({lambda_candidates_particles, "is_signal"}, 1);
+SimpleCut signal_cut({lambda_candidates_particles, "is_signal"}, 0, 1);
 
 Cuts* selection_cuts = new Cuts("LambdaCandidatesCuts", {signal_cut});
 
@@ -50,14 +50,14 @@ int main(int argc, char** argv) {
 
 void Qa3D(QA::Task& task) {
   
-  const int y_nbins = 22;
+  const int y_nbins = 20;
   const float y_low = y_beam-0.8;
-  const float y_up = y_beam+1.4;
+  const float y_up = y_beam+1.2;
   const float y_bin_width = (y_up-y_low)/y_nbins;
 
-  const int pT_nbins = 25;
+  const int pT_nbins = 18;
   const float pT_low = 0.;
-  const float pT_up = 2.5;
+  const float pT_up = 1.8;
   const float pT_bin_width = (pT_up-pT_low)/pT_nbins;
   
   std::vector<Cuts*> y_pT_cut;
@@ -71,8 +71,10 @@ void Qa3D(QA::Task& task) {
   Variable pull_py("pull_py", {{lambda_candidates_particles, "py"}, {lambda_simulated_particles, "py"}, {lambda_candidates_particles, "pyerr"}}, [](std::vector<double> par){return (par[0]-par[1])/par[2];});
   Variable pull_pz("pull_pz", {{lambda_candidates_particles, "pz"}, {lambda_simulated_particles, "pz"}, {lambda_candidates_particles, "pzerr"}}, [](std::vector<double> par){return (par[0]-par[1])/par[2];});  
         
-  for(int i_y_bin=1; i_y_bin<=y_nbins; i_y_bin++)
-    for(int i_pT_bin=1; i_pT_bin<=pT_nbins; i_pT_bin++)
+//   for(int i_y_bin=1; i_y_bin<=y_nbins; i_y_bin++)
+//     for(int i_pT_bin=1; i_pT_bin<=pT_nbins; i_pT_bin++)
+  for(int i_y_bin=8; i_y_bin<=8; i_y_bin++)
+    for(int i_pT_bin=7; i_pT_bin<=7; i_pT_bin++)
     {
       std::string binname;
       if(i_y_bin<10 && i_pT_bin<10)
@@ -93,21 +95,21 @@ void Qa3D(QA::Task& task) {
       
       task.AddH1({"m_{#Lambda}, GeV/c^{2}", {lambda_candidates_particles, "mass"}, {nbins, 1.1, 1.132}}, y_pT_cut.at(binnumber));
       
-      task.AddH1({"p_{x}^{reco}-p_{x}^{sim}, GeV/c", diff_px, {nbins, -0.3, 0.3}}, y_pT_cut.at(binnumber));
-      task.AddH1({"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.3, 0.3}}, y_pT_cut.at(binnumber));
+      task.AddH1({"p_{x}^{reco}-p_{x}^{sim}, GeV/c", diff_px, {nbins, -0.2, 0.2}}, y_pT_cut.at(binnumber));
+      task.AddH1({"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.2, 0.2}}, y_pT_cut.at(binnumber));
       task.AddH1({"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.5, 0.5}}, y_pT_cut.at(binnumber));
       
-      task.AddH2({"p_{x}^{reco}-p_{x}^{sim}, GeV/c", diff_px, {nbins, -0.3, 0.3}}, {"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.3, 0.3}}, y_pT_cut.at(binnumber));
-//       task.AddH2({"p_{x}^{reco}-p_{x}^{sim}, GeV/c", diff_px, {nbins, -0.3, 0.3}}, {"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.5, 0.5}}, y_pT_cut.at(binnumber));
-//       task.AddH2({"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.3, 0.3}}, {"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.5, 0.5}}, y_pT_cut.at(binnumber));
+      task.AddH2({"p_{x}^{reco}-p_{x}^{sim}, GeV/c", diff_px, {nbins, -0.2, 0.2}}, {"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.2, 0.2}}, y_pT_cut.at(binnumber));
+      task.AddH2({"p_{x}^{reco}-p_{x}^{sim}, GeV/c", diff_px, {nbins, -0.2, 0.2}}, {"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.5, 0.5}}, y_pT_cut.at(binnumber));
+      task.AddH2({"p_{y}^{reco}-p_{y}^{sim}, GeV/c", diff_py, {nbins, -0.2, 0.2}}, {"p_{z}^{reco}-p_{z}^{sim}, GeV/c", diff_pz, {nbins, -0.5, 0.5}}, y_pT_cut.at(binnumber));
       
       task.AddH1({"(p_{x}^{reco}-p_{x}^{sim})/#sigma_{p_{x}}", pull_px, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
       task.AddH1({"(p_{y}^{reco}-p_{y}^{sim})/#sigma_{p_{y}}", pull_py, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
       task.AddH1({"(p_{z}^{reco}-p_{z}^{sim})/#sigma_{p_{z}}", pull_pz, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
 //       
-//       task.AddH2({"(p_{x}^{reco}-p_{x}^{sim})/#sigma_{p_{x}}", pull_px, {nbins, -10, 10}}, {"(p_{y}^{reco}-p_{y}^{sim})/#sigma_{p_{y}}", pull_py, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
-//       task.AddH2({"(p_{x}^{reco}-p_{x}^{sim})/#sigma_{p_{x}}", pull_px, {nbins, -10, 10}}, {"(p_{z}^{reco}-p_{z}^{sim})/#sigma_{p_{z}}", pull_pz, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
-//       task.AddH2({"(p_{y}^{reco}-p_{y}^{sim})/#sigma_{p_{y}}", pull_py, {nbins, -10, 10}}, {"(p_{z}^{reco}-p_{z}^{sim})/#sigma_{p_{z}}", pull_pz, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
+      task.AddH2({"(p_{x}^{reco}-p_{x}^{sim})/#sigma_{p_{x}}", pull_px, {nbins, -10, 10}}, {"(p_{y}^{reco}-p_{y}^{sim})/#sigma_{p_{y}}", pull_py, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
+      task.AddH2({"(p_{x}^{reco}-p_{x}^{sim})/#sigma_{p_{x}}", pull_px, {nbins, -10, 10}}, {"(p_{z}^{reco}-p_{z}^{sim})/#sigma_{p_{z}}", pull_pz, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
+      task.AddH2({"(p_{y}^{reco}-p_{y}^{sim})/#sigma_{p_{y}}", pull_py, {nbins, -10, 10}}, {"(p_{z}^{reco}-p_{z}^{sim})/#sigma_{p_{z}}", pull_pz, {nbins, -10, 10}}, y_pT_cut.at(binnumber));
       
     }
 }
