@@ -29,7 +29,7 @@ Simple program:
     // 2D histo:
     task->AddH2({"DCA_{x}", {"VtxTracks", "dcax"}, {100, -1, 1}}, {"DCA_{y}", {"VtxTracks", "dcay"}, {100, -1, 1}}); 
 
-    // Histogramm with additional cut:
+    // Histogram with additional cut:
     Cuts* mc_protons = new Cuts("McProtons", {{"SimTracks","pid"}, 2212});
     task->AddH1({"N_{hits}", {"VtxTracks", "nhits"}, {15, 0, 15}}, mc_protons); 
 
