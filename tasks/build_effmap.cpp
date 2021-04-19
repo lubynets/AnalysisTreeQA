@@ -19,14 +19,14 @@ SimpleCut pid_cut({sim_particles, "pid"}, 3122);
 Cuts* sim_pid_cut = new Cuts("LambdaSimCut", {pid_cut});
 
 SimpleCut signal_cut({reco_tracks, "is_signal"}, 1, 2);
-SimpleCut cosinepos_cut({reco_tracks, "cosinepos"}, 0.9999, HugeValue);
+// SimpleCut cosinepos_cut({reco_tracks, "cosinepos"}, 0.9999, HugeValue);
 Cuts* selection_cuts = new Cuts("LambdaCandidatesCuts", {
 //                                                           nhitspos_cut,
 //                                                           nhitsneg_cut,
 //                                                           sumnhits_cut,
 //                                                           chi2primpos_cut,
 //                                                           chi2primneg_cut,
-                                                          cosinepos_cut,
+//                                                           cosinepos_cut,
 //                                                           ldl_cut,
                                                           signal_cut
                                                                           });

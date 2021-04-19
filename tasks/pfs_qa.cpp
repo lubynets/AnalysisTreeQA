@@ -33,18 +33,22 @@ const std::string lambda_simulated_particles = "LambdaSimulated";
 // SimpleCut chi2primneg_cut({lambda_candidates_particles, "chi2primneg"}, 110, HugeValue);
 // SimpleCut cosinepos_cut({lambda_candidates_particles, "cosinepos"}, 0.99825, HugeValue);
 // SimpleCut ldl_cut({lambda_candidates_particles, "ldl"}, 4., HugeValue);
+// SimpleCut distance_cut({lambda_candidates_particles, "distance"}, 0., 0.15);
+// SimpleCut chi2geo_cut({lambda_candidates_particles, "chi2geo"}, 0., 11.);
+// SimpleCut chi2topo_cut({lambda_candidates_particles, "chi2topo"}, 0., 29);
 
-SimpleCut signal_cut({lambda_candidates_particles, "is_signal"}, 0, 2);
+// SimpleCut signal_cut({lambda_candidates_particles, "is_signal"}, -0.1, 0.1);
+SimpleCut signal_cut({lambda_candidates_particles, "is_signal"},  0.9, 2.1);
 
 
 Cuts* selection_cuts = new Cuts("LambdaCandidatesCuts", {
-//                                                           nhitspos_cut,
-//                                                           nhitsneg_cut,
-//                                                           sumnhits_cut,
 //                                                           chi2primpos_cut,
 //                                                           chi2primneg_cut,
 //                                                           cosinepos_cut,
 //                                                           ldl_cut,
+//                                                           distance_cut,
+//                                                           chi2geo_cut,
+//                                                           chi2topo_cut,
                                                           signal_cut
                                                                           });
 
@@ -57,8 +61,8 @@ int main(int argc, char** argv) {
 
   const std::string filelist = argv[1];
 
-//   QA::Manager man({filelist}, {"sTree"});
-  QA::Manager man({filelist}, {"aTree"});
+  QA::Manager man({filelist}, {"sTree"});
+//   QA::Manager man({filelist}, {"aTree"});
   man.SetOutFileName("pfsqa.root");
   
   man.AddBranchCut(selection_cuts);
@@ -81,12 +85,16 @@ void LambdaCandidatesQA(QA::Task& task) {
 //   Variable point_angle("PA", {{lambda_candidates_particles, "cosinepos"}}, [](std::vector<double> par){return TMath::ACos(par[0]);});
 //   task.AddH1({"#alpha_{#Lambda, p}", point_angle, {nbins, 0, TMath::Pi()/3}});
 // 
-//   task.AddH1({"#chi^{2}_{prim, pos}", {lambda_candidates_particles, "chi2primpos"}, {nbins, 0, 400}});
-//   task.AddH1({"#chi^{2}_{prim, neg}", {lambda_candidates_particles, "chi2primneg"}, {nbins, 0, 400}});
-//   task.AddH1({"DCA, cm", {lambda_candidates_particles, "distance"}, {nbins, 0, 20}});
-//   task.AddH1({"cos(#alpha_{#Lambda, p})", {lambda_candidates_particles, "cosinepos"}, {nbins, 0.5, 1}});
-//   task.AddH1({"#chi^{2}_{geo}", {lambda_candidates_particles, "chi2geo"}, {nbins, 0, 100}});
-//   task.AddH1({"L/#Delta L", {lambda_candidates_particles, "ldl"}, {nbins, 0, 100}});  
+  task.AddH1({"#chi^{2}_{prim, pos}", {lambda_candidates_particles, "chi2primpos"}, {nbins, 0, 400}});
+  task.AddH1({"#chi^{2}_{prim, neg}", {lambda_candidates_particles, "chi2primneg"}, {nbins, 0, 400}});
+  task.AddH1({"DCA, cm", {lambda_candidates_particles, "distance"}, {nbins, 0, 20}});
+  task.AddH1({"cos(#alpha_{#Lambda, p})", {lambda_candidates_particles, "cosinepos"}, {nbins, 0.5, 1}});
+//   task.AddH1({"#chi^{2}_{geofull}", {lambda_candidates_particles, "chi2geofull"}, {10*nbins, 0, 1000}});
+//   task.AddH1({"ndf", {lambda_candidates_particles, "ndf"}, {45, 0, 45}});
+  task.AddH1({"#chi^{2}_{geo}", {lambda_candidates_particles, "chi2geo"}, {nbins, 0, 100}});
+//   task.AddH2({"#chi^{2}_{geo}", {lambda_candidates_particles, "chi2geo"}, {nbins/8, 0, 100}}, {"DCA, cm", {lambda_candidates_particles, "distance"}, {nbins/8, 0, 20}});
+  task.AddH1({"L/#Delta L", {lambda_candidates_particles, "ldl"}, {nbins, 0, 100}});  
+  task.AddH1({"#chi^{2}_{topo}", {lambda_candidates_particles, "chi2topo"}, {nbins, 0, 100}});
 //   
 //   task.AddH1({"N_{hits}, pos", {lambda_candidates_particles, "nhitspos"}, {10, 2.5, 12.5}});
 //   task.AddH1({"N_{hits}, neg", {lambda_candidates_particles, "nhitsneg"}, {10, 2.5, 12.5}});
@@ -94,7 +102,7 @@ void LambdaCandidatesQA(QA::Task& task) {
 //   Variable sumnhits("sumnhits", {{lambda_candidates_particles, "nhitspos"}, {lambda_candidates_particles, "nhitsneg"}}, [](std::vector<double> par){return par[0]+par[1];});
 //   task.AddH1({"N_{hits}, sum", sumnhits, {19, 5.5, 24.5}});
   
-  task.AddH1({"m_{#Lambda}, GeV", {lambda_candidates_particles, "mass"}, {nbins, 1, 2}});
+  task.AddH1({"m_{#Lambda}, GeV", {lambda_candidates_particles, "mass"}, {4*nbins, -2, 2}});
   task.AddH1({"is signal", {lambda_candidates_particles, "is_signal"}, {5, -1.5, 3.5}});
 /*  
   task.AddH2({"N_{hits}, pos", {lambda_candidates_particles, "nhitspos"}, {10, 2.5, 12.5}}, {"#chi^{2}_{prim, pos}", {lambda_candidates_particles, "chi2primpos"}, {nbins, 0, 400}});

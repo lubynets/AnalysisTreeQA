@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
   man.AddTask(task);
 
   man.Init();
-  man.Run(1000);
+  man.Run(-1);
   man.Finish();
 
   return 0;

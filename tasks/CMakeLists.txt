@@ -24,7 +24,17 @@ add_executable(qa3D qa3D.cpp)
 add_dependencies(qa3D AnalysisTreeQA ${PROJECT_DEPENDENCIES})
 target_link_libraries(qa3D ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
 
+add_executable(atfiller_qa atfiller_qa.cpp)
+add_dependencies(atfiller_qa AnalysisTreeQA ${PROJECT_DEPENDENCIES})
+target_link_libraries(atfiller_qa ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
+
+add_executable(mass3D mass3D.cpp)
+add_dependencies(mass3D AnalysisTreeQA ${PROJECT_DEPENDENCIES})
+target_link_libraries(mass3D ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
+
 install (TARGETS cbm_qa RUNTIME DESTINATION bin)
 install (TARGETS pfs_qa RUNTIME DESTINATION bin)
 install (TARGETS build_effmap RUNTIME DESTINATION bin)
 install (TARGETS qa3D RUNTIME DESTINATION bin)
+install (TARGETS atfiller_qa RUNTIME DESTINATION bin)
+install (TARGETS mass3D RUNTIME DESTINATION bin)
