@@ -18,3 +18,9 @@ add_dependencies(example AnalysisTreeQA)
 target_link_libraries(example ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
 
 install (TARGETS example RUNTIME DESTINATION bin)
+
+add_executable(pfs_qa pfs_qa.cpp)
+add_dependencies(pfs_qa AnalysisTreeQA)
+target_link_libraries(pfs_qa ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
+
+install (TARGETS pfs_qa RUNTIME DESTINATION bin)
