@@ -33,21 +33,19 @@ void pfs_qa(const std::string& filelist){
 //     RangeCut ("Candidates.cosine_first",     0.,      HugeValue ),
 //     RangeCut ("Candidates.cosine_second",    0.,      HugeValue ),
 //     RangeCut ("Candidates.chi2_topo",        0.,      15.       ),
-//     RangeCut ("Candidates.chi2prim_mother",  0.,      15.       ),
   };
   
   std::vector<SimpleCut> xicuts
   {
     EqualsCut("Candidates.pid",              3312               ),
-//     RangeCut ("Candidates.chi2_prim_first",  18.4207, HugeValue ),
-//     RangeCut ("Candidates.chi2_prim_second", 18.4207, HugeValue ),
-//     RangeCut ("Candidates.distance",         0.,      1.        ),
-//     RangeCut ("Candidates.chi2_geo",         0.,      3.        ),
-//     RangeCut ("Candidates.l_over_dl",        0.,      5.        ),
-//     RangeCut ("Candidates.cosine_first",     0.,      HugeValue ),
-//     RangeCut ("Candidates.cosine_second",    0.,      HugeValue ),
-//     RangeCut ("Candidates.chi2_topo",        0.,      15.       ),
-//     RangeCut ("Candidates.chi2prim_mother",  0.,      15.       ),
+//     RangeCut ("Candidates.chi2_prim_first",  50.,   HugeValue ),
+//     RangeCut ("Candidates.chi2_prim_second", 20.,   HugeValue ),
+//     RangeCut ("Candidates.distance",         0.,    0.15        ),
+//     RangeCut ("Candidates.chi2_geo",         0.,    11.        ),
+//     RangeCut ("Candidates.l_over_dl",        4.,    HugeValue     ),
+// //     RangeCut ("Candidates.cosine_first",     0.,      HugeValue ),
+//     RangeCut ("Candidates.cosine_second",    0.998, HugeValue ),
+//     RangeCut ("Candidates.chi2_topo",        0.,    22.       ),
   };
   
   struct QaSetup
@@ -74,7 +72,7 @@ void pfs_qa(const std::string& filelist){
   
   std::vector<QaPid> qapids
   {
-//     {"Lambda", lambdacuts, "#Lambda", "#pi^{-}", "p"},
+    {"Lambda", lambdacuts, "#Lambda", "#pi^{-}", "p"},
     {"Ksi",    xicuts,     "#Xi^{-}", "#pi^{-}", "#Lambda"}
   };
   

@@ -24,3 +24,10 @@ add_dependencies(pfs_qa AnalysisTreeQA)
 target_link_libraries(pfs_qa ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
 
 install (TARGETS pfs_qa RUNTIME DESTINATION bin)
+
+add_executable(cbm_qa cbm_qa.cpp)
+add_dependencies(cbm_qa AnalysisTreeQA)
+target_link_libraries(cbm_qa ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
+
+install (TARGETS cbm_qa RUNTIME DESTINATION bin)
+
