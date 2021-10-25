@@ -8,7 +8,7 @@ const int nbins = 1000;
 
 using namespace AnalysisTree;
 
-void cbm_qa(const std::string& filelist){
+void covariances(const std::string& filelist){
   auto* man = TaskManager::GetInstance();
 
   auto* task = new QA::Task;
