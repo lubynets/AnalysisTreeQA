@@ -8,7 +8,7 @@ const int nbins = 1000;
 
 using namespace AnalysisTree;
 
-void covariances(const std::string& filelist){
+void covariances_qa(const std::string& filelist){
   auto* man = TaskManager::GetInstance();
 
   auto* task = new QA::Task;
@@ -42,10 +42,10 @@ void covariances(const std::string& filelist){
 int main(int argc, char* argv[]){
   if (argc <= 1) {
     std::cout << "Not enough arguments! Please use:" << std::endl;
-    std::cout << "   ./cbm_qa filelist" << std::endl;
+    std::cout << "   ./covariances_qa filelist" << std::endl;
     return -1;
   }  
   
-  cbm_qa(argv[1]);
+  covariances_qa(argv[1]);
   return 0;
 }

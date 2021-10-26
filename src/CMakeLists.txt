@@ -6,7 +6,7 @@ set(SOURCES
 )
 
 string(REPLACE ".cpp" ".hpp" HEADERS "${SOURCES}")
-list(APPEND HEADERS "BasicQA.hpp")
+list(APPEND HEADERS "BasicQA.hpp" "CbmCuts.h")
 
 add_library(AnalysisTreeQA SHARED ${SOURCES} G__AnalysisTreeQA.cxx)
 

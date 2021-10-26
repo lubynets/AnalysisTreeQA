@@ -25,9 +25,15 @@ target_link_libraries(pfs_qa ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase A
 
 install (TARGETS pfs_qa RUNTIME DESTINATION bin)
 
-add_executable(covariances covariances.cpp)
-add_dependencies(covariances AnalysisTreeQA)
-target_link_libraries(covariances ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
+add_executable(cbm_qa cbm_qa.cpp)
+add_dependencies(cbm_qa AnalysisTreeQA)
+target_link_libraries(cbm_qa ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
 
-install (TARGETS covariances RUNTIME DESTINATION bin)
+install (TARGETS cbm_qa RUNTIME DESTINATION bin)
+
+add_executable(covariances_qa covariances_qa.cpp)
+add_dependencies(covariances_qa AnalysisTreeQA)
+target_link_libraries(covariances_qa ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
+
+install (TARGETS covariances_qa RUNTIME DESTINATION bin)
 
