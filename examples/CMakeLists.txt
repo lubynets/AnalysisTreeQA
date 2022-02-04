@@ -37,3 +37,21 @@ target_link_libraries(covariances_qa ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTr
 
 install (TARGETS covariances_qa RUNTIME DESTINATION bin)
 
+add_executable(lambda_qa lambda_qa.cpp)
+add_dependencies(lambda_qa AnalysisTreeQA)
+target_link_libraries(lambda_qa ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
+
+install (TARGETS lambda_qa RUNTIME DESTINATION bin)
+
+add_executable(tof_purities_qa tof_purities_qa.cpp)
+add_dependencies(tof_purities_qa AnalysisTreeQA)
+target_link_libraries(tof_purities_qa ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
+
+install (TARGETS tof_purities_qa RUNTIME DESTINATION bin)
+
+add_executable(m2_pq m2_pq.cpp)
+add_dependencies(m2_pq AnalysisTreeQA)
+target_link_libraries(m2_pq ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
+
+install (TARGETS m2_pq RUNTIME DESTINATION bin)
+
