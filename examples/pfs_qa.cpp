@@ -101,13 +101,13 @@ void pfs_qa(const std::string& filelist){
       
       //**************************************** 1D histograms of Candidates ******************************************************************************************************************************************************
       task->AddH1({("m_{" + qp.axisname_ + "}, GeV/c^{2}").c_str(),                                Variable::FromString("Candidates.mass"),             {nbins, qp.leftrange_, qp.rightrange_}}, selection_cuts);
-      task->AddH1({("p_{" + qp.axisname_ + "}, GeV/c").c_str(),                                    Variable::FromString("Candidates.p"),                {100, 0,   20}},           selection_cuts);
-      task->AddH1({("p_{X " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.px"),               {100, -5,   5}},           selection_cuts);
-      task->AddH1({("p_{Y " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.py"),               {100, -5,   5}},           selection_cuts);
-      task->AddH1({("p_{Z " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.pz"),               {100, 0,   20}},           selection_cuts);
-      task->AddH1({("p_{T " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.pT"),               {100, 0,   5 }},           selection_cuts);
-      task->AddH1({("y_{LAB " + qp.axisname_ + "}").c_str(),                                       Variable::FromString("Candidates.rapidity"),         {40,  0,   4 }},           selection_cuts);
-      task->AddH1({("#varphi_{" + qp.axisname_ + "}, rad").c_str(),                                Variable::FromString("Candidates.phi"),              {100, -PI, PI}},           selection_cuts);
+//       task->AddH1({("p_{" + qp.axisname_ + "}, GeV/c").c_str(),                                    Variable::FromString("Candidates.p"),                {100, 0,   20}},           selection_cuts);
+//       task->AddH1({("p_{X " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.px"),               {100, -5,   5}},           selection_cuts);
+//       task->AddH1({("p_{Y " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.py"),               {100, -5,   5}},           selection_cuts);
+//       task->AddH1({("p_{Z " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.pz"),               {100, 0,   20}},           selection_cuts);
+//       task->AddH1({("p_{T " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.pT"),               {100, 0,   5 }},           selection_cuts);
+//       task->AddH1({("y_{LAB " + qp.axisname_ + "}").c_str(),                                       Variable::FromString("Candidates.rapidity"),         {40,  0,   4 }},           selection_cuts);
+//       task->AddH1({("#varphi_{" + qp.axisname_ + "}, rad").c_str(),                                Variable::FromString("Candidates.phi"),              {100, -PI, PI}},           selection_cuts);
 // //       task->AddH1({("X_{" + qp.axisname_ + "}, cm").c_str(),                                       Variable::FromString("Candidates.x"),                {200, -50, 50}},           selection_cuts);
 // //       task->AddH1({("Y_{" + qp.axisname_ + "}, cm").c_str(),                                       Variable::FromString("Candidates.y"),                {200, -50, 50}},           selection_cuts);
 // //       task->AddH1({("Z_{" + qp.axisname_ + "}, cm").c_str(),                                       Variable::FromString("Candidates.z"),                {360, -10, 80}},           selection_cuts);
@@ -127,18 +127,18 @@ void pfs_qa(const std::string& filelist){
       
       if(qs.name_ != "Sgnl") continue;
       
-      //***************************************** 2D histograms Candidates-Simulated **********************************************************************************************************************************************
-      task->AddH2({("p^{sim}_{" + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Simulated.p"), {100, 0, 20}}, {("p^{reco}_{" + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Candidates.p"), {100, 0, 20}}, selection_cuts);
-      task->AddH2({("p^{sim}_{T " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Simulated.pT"), {100, 0, 5}}, {("p^{reco}_{T " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Candidates.pT"), {100, 0, 5}}, selection_cuts);
-      task->AddH2({("p^{sim}_{X " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Simulated.px"), {100, -5, 5}}, {("p^{reco}_{X " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Candidates.px"), {100, -5, 5}}, selection_cuts);
-      task->AddH2({("p^{sim}_{Y " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Simulated.py"), {100, -5, 5}}, {("p^{reco}_{Y " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Candidates.py"), {100, -5, 5}}, selection_cuts);
-      task->AddH2({("p^{sim}_{Z " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Simulated.pz"), {100, 0, 20}}, {("p^{reco}_{Z " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Candidates.pz"), {100, 0, 20}}, selection_cuts);
-      task->AddH2({("y^{sim}_{LAB " + qp.axisname_ + "}").c_str(), Variable::FromString("Simulated.rapidity"), {40, 0, 4}}, {("y^{reco}_{LAB " + qp.axisname_ + "}").c_str(), Variable::FromString("Candidates.rapidity"), {40, 0, 4}}, selection_cuts);
-      task->AddH2({("#varphi^{sim}_{" + qp.axisname_ + "}").c_str(), Variable::FromString("Simulated.phi"), {100, -PI, PI}}, {("#varphi^{reco}_{" + qp.axisname_ + "}").c_str(), Variable::FromString("Candidates.phi"), {100, -PI, PI}}, selection_cuts);
-//       task->AddH2({("X^{sim}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Simulated.x"), {200, -50, 50}}, {("X^{reco}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Candidates.x"), {200, -50, 50}}, selection_cuts);
-//       task->AddH2({("Y^{sim}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Simulated.y"), {200, -50, 50}}, {("Y^{reco}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Candidates.y"), {200, -50, 50}}, selection_cuts);
-//       task->AddH2({("Z^{sim}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Simulated.z"), {360, -10, 80}}, {("Z^{reco}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Candidates.z"), {360, -10, 80}}, selection_cuts);    
-      //***************************************************************************************************************************************************************************************************************************
+//       //***************************************** 2D histograms Candidates-Simulated **********************************************************************************************************************************************
+//       task->AddH2({("p^{sim}_{" + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Simulated.p"), {100, 0, 20}}, {("p^{reco}_{" + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Candidates.p"), {100, 0, 20}}, selection_cuts);
+//       task->AddH2({("p^{sim}_{T " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Simulated.pT"), {100, 0, 5}}, {("p^{reco}_{T " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Candidates.pT"), {100, 0, 5}}, selection_cuts);
+//       task->AddH2({("p^{sim}_{X " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Simulated.px"), {100, -5, 5}}, {("p^{reco}_{X " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Candidates.px"), {100, -5, 5}}, selection_cuts);
+//       task->AddH2({("p^{sim}_{Y " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Simulated.py"), {100, -5, 5}}, {("p^{reco}_{Y " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Candidates.py"), {100, -5, 5}}, selection_cuts);
+//       task->AddH2({("p^{sim}_{Z " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Simulated.pz"), {100, 0, 20}}, {("p^{reco}_{Z " + qp.axisname_ + "}, GeV/c").c_str(), Variable::FromString("Candidates.pz"), {100, 0, 20}}, selection_cuts);
+//       task->AddH2({("y^{sim}_{LAB " + qp.axisname_ + "}").c_str(), Variable::FromString("Simulated.rapidity"), {40, 0, 4}}, {("y^{reco}_{LAB " + qp.axisname_ + "}").c_str(), Variable::FromString("Candidates.rapidity"), {40, 0, 4}}, selection_cuts);
+//       task->AddH2({("#varphi^{sim}_{" + qp.axisname_ + "}").c_str(), Variable::FromString("Simulated.phi"), {100, -PI, PI}}, {("#varphi^{reco}_{" + qp.axisname_ + "}").c_str(), Variable::FromString("Candidates.phi"), {100, -PI, PI}}, selection_cuts);
+// //       task->AddH2({("X^{sim}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Simulated.x"), {200, -50, 50}}, {("X^{reco}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Candidates.x"), {200, -50, 50}}, selection_cuts);
+// //       task->AddH2({("Y^{sim}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Simulated.y"), {200, -50, 50}}, {("Y^{reco}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Candidates.y"), {200, -50, 50}}, selection_cuts);
+// //       task->AddH2({("Z^{sim}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Simulated.z"), {360, -10, 80}}, {("Z^{reco}_{" + qp.axisname_ + "}, cm").c_str(), Variable::FromString("Candidates.z"), {360, -10, 80}}, selection_cuts);    
+//       //***************************************************************************************************************************************************************************************************************************
       
       //***************************************** 1D histograms difference Candidates-Simulated ***********************************************************************************************************************************
 //       Variable diff_p("diff_p", {{"Candidates", "p"}, {"Simulated", "p"}}, []( std::vector<double>& var ) { return var.at(0)-var.at(1); });

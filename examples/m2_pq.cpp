@@ -37,8 +37,8 @@ void pfs_qa(const std::string& filelist){
   {
 //     double pdg = pa.pdg_;
     
-//     SimpleCut pdg_simplecut = EqualsCut("RecParticles.pid", pa.pdg_);
-    SimpleCut pdg_simplecut = RangeCut("RecParticles.pid", pa.pdg_-0.1, pa.pdg_+0.1);
+    SimpleCut pdg_simplecut = EqualsCut("RecParticles.pid", pa.pdg_);
+//     SimpleCut pdg_simplecut = RangeCut("RecParticles.pid", pa.pdg_-0.1, pa.pdg_+0.1);
 //     SimpleCut pdg_simplecut = SimpleCut({"RecParticles.pid"}, [pdg]( std::vector<double>& var ) { return std::fabs(var.at(0)-pdg)<0.1;});
     Cuts* pdg_cut = new Cuts((pa.name_ + "_plus").c_str(), {pdg_simplecut});
     task->AddH2({"p/q, GeV/c", Variable::FromString("TofHits.qp_tof"), {nbins, -10, 10}}, {"m^{2}/q^{2}, (GeV/c^{2})^{2}", Variable::FromString("TofHits.mass2"), {nbins, -2, 5}}, pdg_cut);
