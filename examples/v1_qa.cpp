@@ -58,7 +58,7 @@ void example(const std::string& filelist){
   man->AddTask(task);
 
   man->Init({filelist}, {"rTree"});
-  man->Run(100);
+  man->Run(-1);
   man->Finish();
 }
 

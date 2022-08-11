@@ -84,10 +84,10 @@ void pfs_qa(const std::string& filelist){
   
   std::vector<QaPid> qapids
   {
-//     {"Kshort", kshortcuts, "K^{0}_{S}",  "#pi^{-}", "#pi^{+}", 0, 1},
-//     {"Lambda", lambdacuts, "#Lambda",    "#pi^{-}", "p", 1, 2},
-    {"Ksi",    xicuts,     "#Xi^{-}",    "#pi^{-}", "#Lambda", 1, 3},
-    {"Omega",  omegacuts,  "#Omega^{-}", "K^{-}",   "#Lambda", 1, 3}
+    {"Kshort", kshortcuts, "K^{0}_{S}",  "#pi^{-}", "#pi^{+}", 0, 1},
+    {"Lambda", lambdacuts, "#Lambda",    "#pi^{-}", "p", 1, 2},
+//     {"Ksi",    xicuts,     "#Xi^{-}",    "#pi^{-}", "#Lambda", 1, 3},
+//     {"Omega",  omegacuts,  "#Omega^{-}", "K^{-}",   "#Lambda", 1, 3}
   };
   
   for(auto& qp : qapids)
@@ -101,28 +101,28 @@ void pfs_qa(const std::string& filelist){
       
       //**************************************** 1D histograms of Candidates ******************************************************************************************************************************************************
       task->AddH1({("m_{" + qp.axisname_ + "}, GeV/c^{2}").c_str(),                                Variable::FromString("Candidates.mass"),             {nbins, qp.leftrange_, qp.rightrange_}}, selection_cuts);
-//       task->AddH1({("p_{" + qp.axisname_ + "}, GeV/c").c_str(),                                    Variable::FromString("Candidates.p"),                {100, 0,   20}},           selection_cuts);
-//       task->AddH1({("p_{X " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.px"),               {100, -5,   5}},           selection_cuts);
-//       task->AddH1({("p_{Y " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.py"),               {100, -5,   5}},           selection_cuts);
-//       task->AddH1({("p_{Z " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.pz"),               {100, 0,   20}},           selection_cuts);
-//       task->AddH1({("p_{T " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.pT"),               {100, 0,   5 }},           selection_cuts);
-//       task->AddH1({("y_{LAB " + qp.axisname_ + "}").c_str(),                                       Variable::FromString("Candidates.rapidity"),         {40,  0,   4 }},           selection_cuts);
-//       task->AddH1({("#varphi_{" + qp.axisname_ + "}, rad").c_str(),                                Variable::FromString("Candidates.phi"),              {100, -PI, PI}},           selection_cuts);
-// //       task->AddH1({("X_{" + qp.axisname_ + "}, cm").c_str(),                                       Variable::FromString("Candidates.x"),                {200, -50, 50}},           selection_cuts);
-// //       task->AddH1({("Y_{" + qp.axisname_ + "}, cm").c_str(),                                       Variable::FromString("Candidates.y"),                {200, -50, 50}},           selection_cuts);
-// //       task->AddH1({("Z_{" + qp.axisname_ + "}, cm").c_str(),                                       Variable::FromString("Candidates.z"),                {360, -10, 80}},           selection_cuts);
-//       task->AddH1({"generation",                                                                   Variable::FromString("Candidates.generation"),       {5, -1.5, 3.5}},           selection_cuts);
-//       task->AddH1({("#chi^{2}_{prim, " + qp.daughter_name_1_ + "}").c_str(),                       Variable::FromString("Candidates.chi2_prim_first"),  {nbins, 0, 400}},          selection_cuts);
-//       task->AddH1({("#chi^{2}_{prim, " + qp.daughter_name_2_ + "}").c_str(),                       Variable::FromString("Candidates.chi2_prim_second"), {nbins, 0, 400}},          selection_cuts);
-//       task->AddH1({"DCA, cm",                                                                      Variable::FromString("Candidates.distance"),         {nbins, 0, 20}},           selection_cuts);
-//       task->AddH1({("cos(#alpha_{" + qp.axisname_ + ", " + qp.daughter_name_1_ + "})").c_str(),    Variable::FromString("Candidates.cosine_first"),     {nbins, 0.5, 1}},          selection_cuts);
-//       task->AddH1({("cos(#alpha_{" + qp.axisname_ + ", " + qp.daughter_name_2_ + "})").c_str(),    Variable::FromString("Candidates.cosine_second"),    {nbins, 0.5, 1}},          selection_cuts);
-//       task->AddH1({"#chi^{2}_{geo}",                                                               Variable::FromString("Candidates.chi2_geo"),         {nbins, 0, 100}},          selection_cuts);
-//       task->AddH1({"L/#Delta L",                                                                   Variable::FromString("Candidates.l_over_dl"),        {nbins, 0, 100}},          selection_cuts);
-//       task->AddH1({"#chi^{2}_{topo}",                                                              Variable::FromString("Candidates.chi2_topo"),        {nbins, 0, 400}},          selection_cuts);
-// //       task->AddH1({("#chi^{2}_{prim, " + qp.axisname_ + "}").c_str(),                              Variable::FromString("Candidates.chi2_prim_mother"), {nbins, 0, 100}},          selection_cuts);
-// //       task->AddH1({("#Delta m_{" + qp.axisname_ + "} / #sigma_{m, " + qp.axisname_ + "}").c_str(), Variable::FromString("Candidates.invmass_discr"),    {nbins, 0, 100}},          selection_cuts);
-// //       task->AddH2({("#chi^{2}_{prim, " + qp.axisname_ + "}").c_str(), Variable::FromString("Candidates.chi2_prim_mother"), {nbins, 0, 100}}, {"#chi^{2}_{topo}", Variable::FromString("Candidates.chi2_topo"), {nbins, 0, 100}}, selection_cuts);
+      task->AddH1({("p_{" + qp.axisname_ + "}, GeV/c").c_str(),                                    Variable::FromString("Candidates.p"),                {100, 0,   20}},           selection_cuts);
+      task->AddH1({("p_{X " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.px"),               {100, -5,   5}},           selection_cuts);
+      task->AddH1({("p_{Y " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.py"),               {100, -5,   5}},           selection_cuts);
+      task->AddH1({("p_{Z " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.pz"),               {100, 0,   20}},           selection_cuts);
+      task->AddH1({("p_{T " + qp.axisname_ + "}, GeV/c").c_str(),                                  Variable::FromString("Candidates.pT"),               {100, 0,   5 }},           selection_cuts);
+      task->AddH1({("y_{LAB " + qp.axisname_ + "}").c_str(),                                       Variable::FromString("Candidates.rapidity"),         {40,  0,   4 }},           selection_cuts);
+      task->AddH1({("#varphi_{" + qp.axisname_ + "}, rad").c_str(),                                Variable::FromString("Candidates.phi"),              {100, -PI, PI}},           selection_cuts);
+//       task->AddH1({("X_{" + qp.axisname_ + "}, cm").c_str(),                                       Variable::FromString("Candidates.x"),                {200, -50, 50}},           selection_cuts);
+//       task->AddH1({("Y_{" + qp.axisname_ + "}, cm").c_str(),                                       Variable::FromString("Candidates.y"),                {200, -50, 50}},           selection_cuts);
+//       task->AddH1({("Z_{" + qp.axisname_ + "}, cm").c_str(),                                       Variable::FromString("Candidates.z"),                {360, -10, 80}},           selection_cuts);
+      task->AddH1({"generation",                                                                   Variable::FromString("Candidates.generation"),       {5, -1.5, 3.5}},           selection_cuts);
+      task->AddH1({("#chi^{2}_{prim, " + qp.daughter_name_1_ + "}").c_str(),                       Variable::FromString("Candidates.chi2_prim_first"),  {nbins, 0, 400}},          selection_cuts);
+      task->AddH1({("#chi^{2}_{prim, " + qp.daughter_name_2_ + "}").c_str(),                       Variable::FromString("Candidates.chi2_prim_second"), {nbins, 0, 400}},          selection_cuts);
+      task->AddH1({"DCA, cm",                                                                      Variable::FromString("Candidates.distance"),         {nbins, 0, 20}},           selection_cuts);
+      task->AddH1({("cos(#alpha_{" + qp.axisname_ + ", " + qp.daughter_name_1_ + "})").c_str(),    Variable::FromString("Candidates.cosine_first"),     {nbins, 0.5, 1}},          selection_cuts);
+      task->AddH1({("cos(#alpha_{" + qp.axisname_ + ", " + qp.daughter_name_2_ + "})").c_str(),    Variable::FromString("Candidates.cosine_second"),    {nbins, 0.5, 1}},          selection_cuts);
+      task->AddH1({"#chi^{2}_{geo}",                                                               Variable::FromString("Candidates.chi2_geo"),         {nbins, 0, 100}},          selection_cuts);
+      task->AddH1({"L/#Delta L",                                                                   Variable::FromString("Candidates.l_over_dl"),        {nbins, 0, 100}},          selection_cuts);
+      task->AddH1({"#chi^{2}_{topo}",                                                              Variable::FromString("Candidates.chi2_topo"),        {nbins, 0, 400}},          selection_cuts);
+//       task->AddH1({("#chi^{2}_{prim, " + qp.axisname_ + "}").c_str(),                              Variable::FromString("Candidates.chi2_prim_mother"), {nbins, 0, 100}},          selection_cuts);
+//       task->AddH1({("#Delta m_{" + qp.axisname_ + "} / #sigma_{m, " + qp.axisname_ + "}").c_str(), Variable::FromString("Candidates.invmass_discr"),    {nbins, 0, 100}},          selection_cuts);
+//       task->AddH2({("#chi^{2}_{prim, " + qp.axisname_ + "}").c_str(), Variable::FromString("Candidates.chi2_prim_mother"), {nbins, 0, 100}}, {"#chi^{2}_{topo}", Variable::FromString("Candidates.chi2_topo"), {nbins, 0, 100}}, selection_cuts);
       //***************************************************************************************************************************************************************************************************************************
       
       if(qs.name_ != "Sgnl") continue;
@@ -166,7 +166,7 @@ void pfs_qa(const std::string& filelist){
   
   man->AddTask(task);
 
-  man->Init({filelist}, {"aTree"});
+  man->Init({filelist}, {"pTree"});
   man->Run(-1);
   man->Finish();
   

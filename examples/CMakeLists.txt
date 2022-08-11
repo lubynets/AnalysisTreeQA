@@ -67,3 +67,9 @@ target_link_libraries(v1_qa ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase An
 
 install (TARGETS v1_qa RUNTIME DESTINATION bin)
 
+add_executable(cbm_qa_lite cbm_qa_lite.cpp)
+add_dependencies(cbm_qa_lite AnalysisTreeQA)
+target_link_libraries(cbm_qa_lite ${ROOT_LIBRARIES} AnalysisTreeQA AnalysisTreeBase AnalysisTreeInfra)
+
+install (TARGETS cbm_qa_lite RUNTIME DESTINATION bin)
+
