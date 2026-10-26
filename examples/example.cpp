@@ -7,7 +7,7 @@
 
 using namespace AnalysisTree;
 
-void example(const std::string& filelist){
+void example(const std::string& filelist) {
   auto* man = TaskManager::GetInstance();
 
   auto* task = new QA::Task;
@@ -17,21 +17,21 @@ void example(const std::string& filelist){
   task->AddH1({"p_{T}, GeV/c", Variable::FromString("VtxTracks.pT"), {100, 0, 3}});
 
   // 1D histo with cut
-  Cuts* pT_cut =  new Cuts("pT_cut", {RangeCut("VtxTracks.pT", 1, 1.5)});
+  Cuts* pT_cut = new Cuts("pT_cut", {RangeCut("VtxTracks.pT", 1, 1.5)});
   task->AddH1({"p_{T}, GeV/c", Variable::FromString("VtxTracks.pT"), {100, 0, 3}}, pT_cut);
 
   // 1D histo with weight
   task->AddH1({"PSD module id", Variable::FromString("PsdModules.id"), {51, -1, 50}}, nullptr, Variable::FromString("PsdModules.signal"));
 
   // AnalysisTree::Variable in case of more complicated plot
-  Variable chi2_over_ndf("#chi^{2}/NDF", {{"VtxTracks", "chi2"}, {"VtxTracks", "ndf"}}, []( std::vector<double>& var ) { return var.at(0)/var.at(1); });
+  Variable chi2_over_ndf("#chi^{2}/NDF", {{"VtxTracks", "chi2"}, {"VtxTracks", "ndf"}}, [](std::vector<double>& var) { return var.at(0) / var.at(1); });
   task->AddH1({"#chi^{2}/NDF", chi2_over_ndf, {100, 0, 10}});
 
   // 2D histo
   task->AddH2({"#eta", Variable::FromString("VtxTracks.eta"), {100, -1, 4}}, {"p_{T}, GeV/c", Variable::FromString("VtxTracks.pT"), {100, 0, 3}});
 
   Variable qp_sts("qp_reco", {{"VtxTracks", "q"}, {"VtxTracks", "p"}}, [](std::vector<double>& qp) { return qp.at(0) * qp.at(1); });
-  task->AddH2({"sign(q)*p, GeV/c", qp_sts, {500, -10, 10}},{"m^{2}, GeV^{2}/c^{2}", {"TofHits", "mass2"}, {500, -1, 2}});
+  task->AddH2({"sign(q)*p, GeV/c", qp_sts, {500, -10, 10}}, {"m^{2}, GeV^{2}/c^{2}", {"TofHits", "mass2"}, {500, -1, 2}});
 
   // 2D histo with weights
   Variable prob_e = Variable::FromString("TrdTracks.pid_like_e");
@@ -48,8 +48,8 @@ void example(const std::string& filelist){
   task->AddH2({"#eta", Variable::FromString("TrdTracks.eta"), {500, 0, 5}}, {"p_{T}, GeV/c", Variable::FromString("TrdTracks.pT"), {300, 0, 1.5}}, prob_pi_cut, prob_pi);
 
   // Histo with additional cuts:
-  Cuts* mc_protons =  new Cuts("McProtons", {EqualsCut("SimParticles.pid", 2212)});
-  Cuts* mc_pions =  new Cuts("McPions", {EqualsCut("SimParticles.pid", 211)});
+  Cuts* mc_protons = new Cuts("McProtons", {EqualsCut("SimParticles.pid", 2212)});
+  Cuts* mc_pions = new Cuts("McPions", {EqualsCut("SimParticles.pid", 211)});
   task->AddH1({"MC-protons #chi^{2}/NDF", chi2_over_ndf, {100, 0, 10}}, mc_protons);
   task->AddH1({"MC-pions #chi^{2}/NDF", chi2_over_ndf, {100, 0, 10}}, mc_pions);
 
@@ -64,7 +64,7 @@ void example(const std::string& filelist){
   //Integral plot 1D
   SimpleCut vtx_chi2_track_cut = RangeCut({"VtxTracks.vtx_chi2"}, 0, 3);
   SimpleCut nhits_cut = RangeCut({"VtxTracks.nhits"}, 4, 100);
-  SimpleCut chi2_cut((std::vector<std::string>){"VtxTracks.chi2", "VtxTracks.ndf"}, [](std::vector<double> par){ return par[0]/par[1] < 10; });
+  SimpleCut chi2_cut((std::vector<std::string>){"VtxTracks.chi2", "VtxTracks.ndf"}, [](std::vector<double> par) { return par[0] / par[1] < 10; });
   SimpleCut eta_cut = RangeCut({"VtxTracks.eta"}, 0, 3);
   Cuts* vertex_tracks_cuts = new Cuts("GoodCentralityTracks", {vtx_chi2_track_cut, nhits_cut, chi2_cut, eta_cut});
   task->AddIntegral({"Multiplicity", Variable::FromString("VtxTracks.ones"), {1000, 0, 1000}}, vertex_tracks_cuts);
@@ -77,8 +77,8 @@ void example(const std::string& filelist){
   man->Finish();
 }
 
-int main(int argc, char* argv[]){
-    if (argc < 2) {
+int main(int argc, char* argv[]) {
+  if (argc < 2) {
     std::cout << "Error! Please use " << std::endl;
     std::cout << " ./example filename" << std::endl;
     exit(EXIT_FAILURE);
