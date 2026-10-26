@@ -21,7 +21,7 @@ AnalysisTree::Task* TaskFactory::CreateTask(const std::string& type_name, const 
   const auto it = task_creators_.find(type_name);
   if (it == task_creators_.end()) {
     throw std::runtime_error("TaskFactory::CreateTask(): unknown task type '" + type_name
-                              + "' (is its .cpp file linked into this binary? see services/README.md)");
+                             + "' (is its .cpp file linked into this binary? see services/README.md)");
   }
   return it->second(node);
 }

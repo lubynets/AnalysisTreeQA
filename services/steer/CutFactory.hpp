@@ -56,11 +56,11 @@ class CutFactory {
 }// namespace AnalysisTree
 
 /// Registers a named, C++-defined cut predicate once, at static-init time. Lambda must have signature: AnalysisTree::SimpleCut(const YAML::Node&). Referenced from YAML as: {type: custom, name: TypeName, ...params}.
-#define ATQA_REGISTER_CUT(TypeName, Lambda)                                                            \
-  namespace {                                                                                          \
-  struct TypeName##_CutRegistrar {                                                                     \
+#define ATQA_REGISTER_CUT(TypeName, Lambda)                                                                      \
+  namespace {                                                                                                    \
+  struct TypeName##_CutRegistrar {                                                                               \
     TypeName##_CutRegistrar() { ::AnalysisTree::QA::CutFactory::Instance().RegisterCutType(#TypeName, Lambda); } \
-  } TypeName##_cut_registrar_instance;                                                                 \
+  } TypeName##_cut_registrar_instance;                                                                           \
   }
 
 #endif//ANALYSISTREEQA_SERVICES_STEER_CUTFACTORY_HPP_

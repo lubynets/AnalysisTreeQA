@@ -29,7 +29,7 @@ AnalysisTree::SimpleCut CutFactory::CreateCustomCut(const std::string& type_name
   const auto it = cut_creators_.find(type_name);
   if (it == cut_creators_.end()) {
     throw std::runtime_error("CutFactory::CreateCustomCut(): unknown custom cut type '" + type_name
-                              + "' (is its .cpp file linked into this binary? see services/README.md)");
+                             + "' (is its .cpp file linked into this binary? see services/README.md)");
   }
   return it->second(params);
 }
@@ -40,9 +40,9 @@ AnalysisTree::SimpleCut CutFactory::BuildSimpleCut(const YAML::Node& simple_cut_
 
   if (type == "range") {
     return RangeCut(simple_cut_node["variable"].as<std::string>(),
-                     simple_cut_node["min"].as<double>(),
-                     simple_cut_node["max"].as<double>(),
-                     title);
+                    simple_cut_node["min"].as<double>(),
+                    simple_cut_node["max"].as<double>(),
+                    title);
   }
   if (type == "equals") {
     return EqualsCut(simple_cut_node["variable"].as<std::string>(), simple_cut_node["value"].as<int>(), title);
@@ -60,7 +60,7 @@ AnalysisTree::SimpleCut CutFactory::BuildSimpleCut(const YAML::Node& simple_cut_
     return BuildOrCut(simple_cut_node);
   }
   throw std::runtime_error("CutFactory::BuildSimpleCut(): unknown simple cut type '" + type
-                            + "' (expected 'range', 'equals', 'not_equals', 'custom' or 'or')");
+                           + "' (expected 'range', 'equals', 'not_equals', 'custom' or 'or')");
 }
 
 AnalysisTree::SimpleCut CutFactory::BuildOrCut(const YAML::Node& or_node) const {
@@ -92,7 +92,7 @@ AnalysisTree::SimpleCut CutFactory::BuildOrCut(const YAML::Node& or_node) const 
       predicates.push_back([value](double x) { return static_cast<int>(x) != value; });
     } else {
       throw std::runtime_error("CutFactory::BuildOrCut(): unsupported clause type '" + clause_type
-                                + "' inside 'or' (expected 'range', 'equals' or 'not_equals')");
+                               + "' inside 'or' (expected 'range', 'equals' or 'not_equals')");
     }
   }
 
@@ -117,7 +117,7 @@ AnalysisTree::Cuts* CutFactory::BuildCuts(const YAML::Node& cuts_field, const st
     const YAML::Node shared_entry = shared_cuts_node_[name];
     if (!shared_entry.IsDefined()) {
       throw std::runtime_error("CutFactory::BuildCuts(): no shared cut named '" + name
-                                + "' found under the top-level 'cuts:' map");
+                               + "' found under the top-level 'cuts:' map");
     }
     return BuildCuts(shared_entry, name);
   }
@@ -125,7 +125,7 @@ AnalysisTree::Cuts* CutFactory::BuildCuts(const YAML::Node& cuts_field, const st
   const YAML::Node simple_cuts = cuts_field["simple_cuts"];
   if (!simple_cuts.IsDefined() || !simple_cuts.IsSequence()) {
     throw std::runtime_error("CutFactory::BuildCuts(): expected a 'simple_cuts' list while building cut '"
-                              + default_name + "'");
+                             + default_name + "'");
   }
 
   std::vector<AnalysisTree::SimpleCut> cuts;

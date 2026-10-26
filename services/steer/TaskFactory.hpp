@@ -48,8 +48,8 @@ struct TaskTypeRegistrar {
 /// Place once in a concrete task's .cpp file, INSIDE the same namespace the class is declared in, using its unqualified name (ClassName must have a `explicit ClassName(const YAML::Node&)` constructor), e.g. for a class
 /// AnalysisTree::QA::TrackQaTask, call ATQA_REGISTER_TASK(TrackQaTask) from within `namespace AnalysisTree { namespace QA { ... } }`, not after it with the qualified name (breaks the token-pasted registrar variable name
 /// and would register the wrong, fully-qualified type string). Linking that .cpp's object file into the final binary is sufficient for ClassName to become selectable from YAML via `task: ClassName`, see services/README.md.
-#define ATQA_REGISTER_TASK(ClassName) \
-  namespace {                                                                                    \
+#define ATQA_REGISTER_TASK(ClassName)                                                             \
+  namespace {                                                                                     \
   static ::AnalysisTree::QA::TaskTypeRegistrar<ClassName> ClassName##_task_registrar(#ClassName); \
   }
 

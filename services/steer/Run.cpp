@@ -40,9 +40,9 @@ std::string ResolveAsFilelist(const std::string& path, std::vector<std::string>&
   }
 
   const auto temp_path = (std::filesystem::temp_directory_path()
-                           / ("analysistreeqa_filelist_" + std::to_string(getpid()) + "_"
-                              + std::to_string(temp_files_to_clean_up.size()) + ".txt"))
-                              .string();
+                          / ("analysistreeqa_filelist_" + std::to_string(getpid()) + "_"
+                             + std::to_string(temp_files_to_clean_up.size()) + ".txt"))
+                             .string();
   std::ofstream out(temp_path);
   out << std::filesystem::absolute(path).string() << "\n";
   temp_files_to_clean_up.push_back(temp_path);
